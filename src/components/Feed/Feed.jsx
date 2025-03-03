@@ -4,16 +4,10 @@ import CreatePost from './CreatePost'
 import PostList from './PostList';
 import { postList } from '../../data/postData'
 
-export default function Feed() {
-    const [posts, setPosts] = useState(postList);
-
-    function handleNewPost(newPost){
-        setPosts([newPost, ...posts]);
-    }
-
+export default function Feed({posts, onNewPostCreated}) {
     return (
         <div className='flex-col feed'>
-            <CreatePost onPostCreated={handleNewPost}/>
+            <CreatePost onNewPostCreated={onNewPostCreated}/>
             <PostList posts={posts}/>
         </div>
     )

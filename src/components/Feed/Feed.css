@@ -166,3 +166,11 @@
     color: #666666;
     font-weight: 500;
 }
+
+.no-posts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7;
+    margin: 20px 0;
+}

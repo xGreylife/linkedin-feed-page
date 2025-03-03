@@ -1,17 +1,22 @@
 import React from "react";
+import './Header.css'
 import Icon from "../atoms/Icon";
 import SearchBar from "./SearchBar";
 import NavItem from "./NavItem";
 import ProfileMenu from "./ProfileMenu";
 
-export default function Header( {onTabChange} ) {
+export default function Header( {searchQuery, showUserList, onSearchQueryChange, onShowUserListChange, onSearchPostsByUserId} ) {
     return ( 
         <header className="header">
             <div className="header-left">
                 <a href="">
                     <Icon iconName={'linkedin'} size={'32px'} color={'#0B66C2'}/>
                 </a>
-                <SearchBar/>
+                <SearchBar searchQuery={searchQuery} 
+                showUserList={showUserList} 
+                onSearchQueryChange={onSearchQueryChange}
+                onShowUserListChange={onShowUserListChange}
+                onSearchPostsByUserId={onSearchPostsByUserId}/>
             </div>
 
             <nav className="navbar">

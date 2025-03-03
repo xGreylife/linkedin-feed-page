@@ -4,7 +4,7 @@ import { loggedInUser } from '../../data/userData'
 import IconText from '../molecules/IconText'
 import Icon from '../atoms/Icon'
 
-export default function CreatePost( {onPostCreated} ) {
+export default function CreatePost( {onNewPostCreated} ) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [postText, setPostText] = useState('');
     const [mediaFile, setMediaFile] = useState(null);
@@ -44,7 +44,7 @@ export default function CreatePost( {onPostCreated} ) {
             comments: []
         };
         
-        onPostCreated(newPost);
+        onNewPostCreated(newPost);
         toggleModal();
     }
 

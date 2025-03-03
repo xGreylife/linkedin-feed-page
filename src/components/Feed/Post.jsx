@@ -11,12 +11,10 @@ export default function Post( {post} ) {
     const [showComments, setShowComments] = useState(false);
 
     function handleShowComments(){
-        console.log('inside handleShowComments')
         setShowComments(!showComments);
     }
 
     function handleSetLikes(){
-        console.log('inside handleSetLikes')
         setLikes(likes + 1);
     }
 
