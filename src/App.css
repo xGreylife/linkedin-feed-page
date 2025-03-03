@@ -32,13 +32,26 @@
   align-items: center;
 }
 
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-start{
+    align-items: start;
+}
+
+.hidden{
+    display: none;
+}
+
 /* --------- Header Component - left header ------------------------------------ */
 
 .header{
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 99;
   width: 100%;
   display: flex;
   gap: 36px;
@@ -223,7 +236,7 @@
 
 .profile-info-wrapper p{
   margin: 5px 0px;
-  /* 2 line ellipses */
+  /* 2 line ellipsis */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;

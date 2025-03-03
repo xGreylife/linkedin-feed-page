@@ -9,7 +9,7 @@ export default function ProfileCard() {
         <img className='profile-banner' src={loggedInUser.banner} alt="Profile Banner" />
         <div className='profile-info-wrapper'>
             <UserAvatar user={loggedInUser} className='avatar-medium profile-banner-photo'/>
-            <UserInfo user={loggedInUser} />
+            <UserInfo className={'user-info'} user={loggedInUser} />
             <p className='light-text'>{loggedInUser.location}</p>
             <div className='profile-user-organization'>
                 <img src={loggedInUser.organizationLogo} alt="Organization Logo"/>

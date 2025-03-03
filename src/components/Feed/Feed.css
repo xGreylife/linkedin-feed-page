@@ -1,0 +1,168 @@
+/* --------- Feed Component - Create Post ------------------------------------ */
+
+.feed{
+    gap: 8px;
+    width: 555px;
+    position: relative;
+}
+
+.create-post-input-wrapper{
+    display: flex;
+    gap: 10px;
+}
+
+.start-post-btn{
+    flex-grow: 1;
+    padding: 15px;
+    border-radius: 50px;
+    border: 1px solid #e0e0e0;
+    background-color: #FFFFFF;
+    text-align: left;
+    font-weight: 600;
+    color: #3b3b3b;
+}
+
+.start-post-btn:hover,
+.post-add-ons > div:hover,
+.post-modal-close-btn:hover,
+.post-modal-header > div:hover{
+    background-color: #F3F3F3;
+}
+
+.post-add-ons{
+    justify-content: space-around;
+}
+
+.post-add-ons > div{
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.post-add-ons span{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* --------- Feed Component - Create Post Modal ------------------------------------ */
+
+/* .post-modal-overlay{
+    position: fixed;
+
+} */
+
+.post-modal{
+    /* width: 680px; */
+    height: fit-content;
+    /* position: fixed;
+    z-index: 999; */
+}
+
+.post-modal-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.post-modal-header > div{
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.post-modal-close-btn{
+    width: 38px;
+    padding: 10px;
+    border-radius: 50%;
+    border: none;
+    background-color: #FFFFFF;
+}
+
+.post-modal form{
+    gap: 20px;
+}
+
+.post-modal-textarea{
+    height: 200px;
+    width: 100%;
+    border: none;
+}
+
+.post-modal-textarea:focus{
+    outline: none;
+    border: none;
+}
+
+.modal-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-button{
+    padding: 8px 16px;
+    border-radius: 50px;
+    border: 1px solid #e0e0e0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.disabled-btn{
+    background-color: #E8E8E8;
+    color: #A2A2A2;
+}
+
+.active-btn{
+    background-color: #0B66C2;
+    color: #FFFFFF;
+}
+
+/* --------- Feed Component - Post ------------------------------------ */
+
+.post-list{
+    gap: 6px;
+}
+
+.post{
+    gap: 5px;
+}
+
+.author-info-wrapper{
+    width: 100%;
+}
+
+.author-info{
+    max-width: 400px;
+}
+
+.author-info > span{
+    font-size: 16px;
+    font-weight: 600;
+}
+  
+.author-info p{
+    margin: 0;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.post-content p, .comment-content p{
+    font-size: 14px;
+}
+
+.post-image{
+    width: 100%;
+}
+
+.post-stats{
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.post-stats span{
+    font-size: 14px;
+    color: #666666;
+    font-weight: 500;
+}

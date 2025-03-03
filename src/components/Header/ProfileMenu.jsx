@@ -27,7 +27,7 @@ export default function ProfileMenu() {
                     <div className='user-profile-wrapper'>
                         <div className='user-profile'>
                             <UserAvatar user={loggedInUser} className='avatar-medium'/>
-                            <UserInfo user={loggedInUser} />
+                            <UserInfo className={'user-info'} user={loggedInUser} />
                         </div>
                         <button>View Profile</button>
                     </div>
