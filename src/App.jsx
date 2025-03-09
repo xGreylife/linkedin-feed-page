@@ -11,23 +11,6 @@ import Notifications from './pages/Notifications';
 import MyProfile from './pages/MyProfile';
 import RootLayout from './pages/RootLayout';
 
-<<<<<<< HEAD
-import Header from './components/Header/Header'
-import LeftSidebar from './components/LeftSidebar/LeftSidebar'
-import Feed from './components/Feed/Feed';
-
-
-function App() {
-  return (
-    <>
-      <Header />
-      <div className='page-content'>
-        <LeftSidebar/>
-        <Feed/>
-      </div>
-    </>
-  )
-=======
 export const LoggedInUserContext = createContext({});
 // const loggedInUserURL = 'https://dummyjson.com/c/bc38-1a37-4cd0-a6f0';
 const loggedInUserURL = 'http://localhost:5000/api/user';
@@ -64,7 +47,6 @@ function App() {
            <RouterProvider router={router}/>
         </LoggedInUserContext.Provider>
     )
->>>>>>> feature/header-sidebar
 }
 
 export default App

@@ -11,7 +11,7 @@ export default function LeftSidebar() {
         <ProfileCard />
         <ProfileStats />
         <TryPremium/>
-        <div className='page-component'>
+        <div className='page-component content-types'>
             {contentTypes.map((item) => 
             <IconText key={item.key}
             iconName={item.iconName}

@@ -8,5 +8,5 @@ export default function TextElement( {textContent} ) {
 }
 
 TextElement.propTypes = {
-    textContent: PropTypes.string,
+    textContent: PropTypes.string.isRequired,
 };

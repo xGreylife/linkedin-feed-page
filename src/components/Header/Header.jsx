@@ -4,14 +4,15 @@ import SearchBar from "./SearchBar";
 import NavItem from "./NavItem";
 import ProfileMenu from "./ProfileMenu";
 import { navItemData } from "../../data/navItemData";
+import { Link } from "react-router-dom";
 
 export default function Header() {
     return ( 
         <header className="header">
             <div className="left-header">
-                <a href="">
+                <Link to="/">
                     <Icon iconName='linkedin' size='32px' color='#0B66C2'/>
-                </a>
+                </Link>
                 <SearchBar/>
             </div>
 
