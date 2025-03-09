@@ -12,8 +12,8 @@ import MyProfile from './pages/MyProfile';
 import RootLayout from './pages/RootLayout';
 
 export const LoggedInUserContext = createContext({});
-const loggedInUserURL = 'https://dummyjson.com/c/bc38-1a37-4cd0-a6f0';
-
+// const loggedInUserURL = 'https://dummyjson.com/c/bc38-1a37-4cd0-a6f0';
+const loggedInUserURL = 'http://localhost:5000/api/user';
 
 const router = createBrowserRouter([
     {
@@ -33,9 +33,13 @@ const router = createBrowserRouter([
 function App() {
     const [loggedInUser, setLoggedInUser] = useState(null);
     useEffect(()=>{
-        axios.get(loggedInUserURL).then((response) => {
+        axios.get(loggedInUserURL)
+        .then((response) => {
             setLoggedInUser(response.data);
         })
+        .catch((err) => {
+            console.log('Failed to get loggedInUser');
+        });
     }, []);
 
     return (
