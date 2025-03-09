@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 export default function Icon({iconName, size='32px', color='#666666'}) {
     return (  
@@ -7,3 +8,9 @@ export default function Icon({iconName, size='32px', color='#666666'}) {
         ></i>
     );
 }
+
+Icon.propTypes = {
+    iconName: PropTypes.string.isRequired,
+    size: PropTypes.string,
+    color: PropTypes.string,
+};
