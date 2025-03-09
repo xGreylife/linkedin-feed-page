@@ -1,17 +1,19 @@
-import React from 'react'
-import { loggedInUser } from '../../data/userData'
-import SidebarTextElement from '../atoms/SidebarTextElement'
+import React, {useContext} from 'react'
+import TextElement from '../atoms/TextElement'
+import { LoggedInUserContext } from '../../App'
 
 export default function ProfileStats() {
-  return (
-    <div className='page-component profile-stats'>
-        <div className='profile-views-wrapper'>
-            <SidebarTextElement textContent={'Profile viewers'}/>
-            <SidebarTextElement textContent={loggedInUser.profileViews}/>
+    const loggedInUser = useContext(LoggedInUserContext);
+    
+    return (
+        <div className='page-component profile-stats'>
+            <div className='profile-views-wrapper'>
+                <TextElement textContent='Profile viewers'/>
+                <TextElement textContent={loggedInUser.profileViews}/>
+            </div>
+            <div>
+                <TextElement textContent='View all analytics'/>
+            </div>
         </div>
-        <div>
-            <SidebarTextElement textContent={'View all analytics'}/>
-        </div>
-    </div>
-  )
+    )
 }

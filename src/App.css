@@ -1,267 +1,323 @@
 /* --------- General ------------------------------------ */
+:root{
+    --linkedin-white: #FFFFFF;
+    --linkedin-grey: #666666;
+    --linkedin-black: #191919;
+    --linkedin-blue: #0364C1;
+    --linkedin-border: 1px solid #e8e8e8;
+}
 
 .page-content{
-  display: flex;
-  gap: 24px;
-  margin: 20px;
-  padding: 0px 10%;
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.25rem;
+    padding: 0px 10%;
 }
 
 .page-component{
-  display: flex;
-  flex-direction: column;
-  gap: 10px; 
-  padding: 12px;
-  border: 1px solid #e8e8e8;
-  border-radius: 8px;
-  background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem; 
+    padding: 0.75rem;
+    border: var(--linkedin-background);
+    border-radius: 8px;
+    background-color: var(--linkedin-white);
 }
 
 .light-text{
-  font-size: 12px;
-  color: #666666;
+    font-size: 0.75em;
+    color: var(--linkedin-grey);
 }
 
 .margin-0{
-  margin: 0;
+    margin: 0;
 }
 
 .flex-row{
-  display: flex;
-  gap: 10px;
-  align-items: center;
+    display: flex;
+    gap: 0.625em;
+    align-items: center;
+}
+
+.avatar-small{
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+.avatar-medium{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.user-info{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+  
+.profile-menu-user-info{
+    width: 220px;
 }
 
 /* --------- Header Component - left header ------------------------------------ */
 
 .header{
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  width: 100%;
-  display: flex;
-  gap: 36px;
-  align-items: center;
-  justify-content: center;
-  background-color: #FFFFFF;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    display: flex;
+    gap: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--linkedin-white);
 }
 
-.header-left{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.left-header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-input{
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .search-input input{
-  width: 16vw;
-  padding: 10px 12px;
-  border-radius: 3px;
-  border: none;
-  background-color: #F2F2F2;
-  text-indent: 20px;
+    width: 16vw;
+    padding: 0.625em 0.75em;
+    border-radius: 3px;
+    border: none;
+    background-color: #F2F2F2;
+    text-indent: 20px;
 }
 
 .search-input i{
-  position: relative;
-  left: 25px;
+    position: relative;
+    left: 25px;
 }
 
 /* --------- Header Component - navbar ------------------------------------ */
 
 .navbar ul{
-  margin: 0px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  list-style: none;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    list-style: none;
 }
 
 .nav-item a{
-  color: #666666;
-  font-size: 12px;
-  font-weight: 400;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  padding: 8px;
+    color: var(--linkedin-grey);
+    font-size: 0.75em;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    padding: 0.5em;
 }
 
 .nav-item a:hover{
-  color: #191919;
+    color: var(--linkedin-black);
+}
+
+.nav-item .active-nav-item{
+    color: var(--linkedin-black);
+    border-bottom: 2px solid var(--linkedin-black);
 }
 
 /* --------- Header Component - profile menu ------------------------------------ */
 
 .profile-menu{
-  position: relative;
+    position: relative;
 }
 
 .profile-button{
-  border: none;
-  background-color: #FFFFFF;
-}
-
-.avatar-small{
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+    border: none;
+    background-color: var(--linkedin-white);
 }
 
 .avatar-text{
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  color: #666666;
-  font-size: 12px;
-  font-weight: 400;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    color: var(--linkedin-grey);
+    font-size: 0.75em;
+    font-weight: 400;
 }
 
 .dropdown-menu{
-  position: absolute;
-  top: 64px;
-  right: 0px;
-  display: flex;
-  flex-direction: column; 
-  background-color: #FFFFFF;
-  padding: 6px;
-  border-radius: 5px;
-  border: 1px solid #e6e5e5;
+    position: absolute;
+    top: 64px;
+    right: 0px;
+    display: flex;
+    flex-direction: column; 
+    background-color: var(--linkedin-white);
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: var(--linkedin-border);
 }
 
 .user-profile-wrapper{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  border-bottom: 1px solid #d3d3d3;
-  padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625em;
+    border-bottom: 1px solid #d3d3d3;
+    padding: 0.625em;
 }
 
 .user-profile{
-  display: flex;
-  gap: 10px;
-}
-
-.avatar-medium{
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.user-info{
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 220px;
-  max-width: 220px;
+    display: flex;
+    gap: 0.625em;
 }
 
 .user-info span{
-  font-size: 16px;
-  font-weight: 600;
+    font-size: 1em;
+    font-weight: 600;
 }
 
 .user-info p{
-  margin: 0;
-  font-size: 14px;
-  text-wrap: wrap;
+    margin: 0;
+    font-size: 0.875em;
+    text-wrap: wrap;
 }
 
 .user-profile-wrapper button{
-  border-radius: 16px;
-  border: 1px solid #0364C1;
-  color: #0364C1;
-  font-weight: 600;
-  background-color: #FFFFFF;
-  padding: 5px;
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid var(--linkedin-blue);
+    color: var(--linkedin-blue);
+    font-weight: 600;
+    background-color: var(--linkedin-white);
+    padding: 5px;
 }
 
 /* --------- Left Sidebar Component - profile card ------------------------------------ */
 
 .left-sidebar{
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 225px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    width: 225px;
 }
 
 .profile-card{
-  background-color: #FFFFFF;
-  border-radius: 8px;
-  position: relative;
+    background-color: var(--linkedin-white);
+    border-radius: 8px;
+    position: relative;
+    border: var(--linkedin-border);
 }
 
 .profile-banner{
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  width: 100%;
-  height: 64px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    width: 100%;
+    height: 64px;
 }
 
 .profile-info-wrapper{
-  padding: 50px 10px 10px;
+    padding: 50px 0.625em 0.625em;
 }
 
 .profile-banner-photo{
-  width: 60px;
-  height: 60px;
-  position: absolute;
-  left: 6%;
-  top: 45px;
-  border: 2px solid #FFFFFF;
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: 6%;
+    top: 45px;
+    border: 2px solid var(--linkedin-white);
 }
 
 .profile-info-wrapper span{
-  font-size: 20px;
+    font-size: 1.25em;
 }
 
 .profile-info-wrapper p{
-  margin: 5px 0px;
-  /* 2 line ellipses */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    margin: 5px 0px;
+    /* 2 line ellipses */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profile-user-organization{
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 13px;
-  font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.875rem;
+    font-weight: 600;
 }
 
 .profile-user-organization img{
-  width: 16px;
-  height: 16px;
-  border-radius: 5px;
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
 }
 
 /* --------- Left Sidebar Component - profile stats ------------------------------------ */
 
 .profile-stats{
-  display: flex;
-  flex-direction: column;
-  gap: 10px; 
-  padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    padding: 12px;
+    border: var(--linkedin-border);
 }
 .sidebar-text{
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
+    font-size: 0.75em;
+    font-weight: 600;
+    cursor: pointer;
 }
 .sidebar-text:hover {
-  text-decoration: underline; 
+    text-decoration: underline; 
 }
 .profile-views-wrapper{
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .page-content {
+        padding: 0 3%;
+    }
+
+    .navbar > ul{
+        gap: 1rem;
+    }
+
+    .nav-item > a > span{
+        display: none;
+    }
+
+    .search-input input{
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-content {
+        flex-direction: column;
+        padding: 0 2%;
+        margin: 0.2em;
+    }
+
+    .left-sidebar {
+        width: 100%;
+        padding: 0.5rem;
+    }
+
+    .profile-menu{
+        display: none;
+    }
+
+    .navbar > ul{
+        gap: 0.2rem;
+    }
 }

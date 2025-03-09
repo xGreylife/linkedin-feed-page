@@ -1,3 +1,4 @@
+// loggedInUSer not used now
 export const loggedInUser = {
     userId: 101,
     name: 'Sahaj Gupta',

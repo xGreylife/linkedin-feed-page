@@ -3,24 +3,25 @@ import Icon from "../atoms/Icon";
 import SearchBar from "./SearchBar";
 import NavItem from "./NavItem";
 import ProfileMenu from "./ProfileMenu";
+import { navItemData } from "../../data/navItemData";
 
-export default function Header( {onTabChange} ) {
+export default function Header() {
     return ( 
         <header className="header">
-            <div className="header-left">
+            <div className="left-header">
                 <a href="">
-                    <Icon iconName={'linkedin'} size={'32px'} color={'#0B66C2'}/>
+                    <Icon iconName='linkedin' size='32px' color='#0B66C2'/>
                 </a>
                 <SearchBar/>
             </div>
 
             <nav className="navbar">
                 <ul>
-                    <NavItem iconName={'house-door-fill'} tabName={'Home'} />
-                    <NavItem iconName={'people-fill'} tabName={'My Network'} />
-                    <NavItem iconName={'briefcase-fill'} tabName={'Jobs'} />
-                    <NavItem iconName={'chat-left-dots-fill'} tabName={'Messaging'} />                                                                                                            
-                    <NavItem iconName={'bell-fill'} tabName={'Notifications'} />
+                    { navItemData.map((navItem) => <NavItem 
+                    icon={navItem.icon}
+                    label={navItem.label}
+                    key={navItem.key}
+                    to={navItem.to}/>) }
                     <ProfileMenu/>
                 </ul>
             </nav>
