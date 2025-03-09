@@ -13,7 +13,7 @@ import RootLayout from './pages/RootLayout';
 
 export const LoggedInUserContext = createContext({});
 // const loggedInUserURL = 'https://dummyjson.com/c/bc38-1a37-4cd0-a6f0';
-const loggedInUserURL = 'http://localhost:5000/api/user';
+import {loggedInUserURL} from './constants/api';
 
 const router = createBrowserRouter([
     {

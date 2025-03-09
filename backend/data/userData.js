@@ -1,5 +1,5 @@
 // loggedInUser not used now
-export const loggedInUser = {
+const loggedInUser = {
     userId: 101,
     name: 'Sahaj Gupta',
     headline: 'ASE intern @Tekion Corp | ICPC regionalist \'23 | Expert @Codeforces | IIIT Guwahati \'25',
@@ -13,8 +13,8 @@ export const loggedInUser = {
     profileViews: 143,
 };
 
-// users not used now
-export const users = [
+// all users
+const users = [
     {
         userId: 101,
         name: 'Sahaj Gupta',
@@ -94,3 +94,5 @@ export const users = [
         profileViews: 120,
     },
 ];
+
+module.exports = { loggedInUser, users };

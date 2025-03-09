@@ -3,26 +3,20 @@ const cors = require('cors');
 const app = express();
 const port = 5000;
 
-const loggedInUser = {
-    userId: 101,
-    name: 'Sahaj Gupta',
-    headline: 'ASE intern @Tekion Corp | ICPC regionalist \'23 | Expert @Codeforces | IIIT Guwahati \'25',
-    avatar: '/loggedInUser/userAvatar.png',
-    banner: '/loggedInUser/userBanner.png',
-    location: 'Lucknow, Uttar Pradesh',
-    organization: 'Tekion Corp',
-    organizationLogo: '/loggedInUser/userOrganizationLogo.png',
-    connections: 277,
-    post: 12,
-    profileViews: 143,
-};
+const { loggedInUser } = require('./data/userData');
+const { postList } = require('./data/postData');
 
 //middleware
 app.use(cors());
+app.use(express.json());
 
 //endpoints
 app.get('/api/user', (req, res) => {
     res.json(loggedInUser);
+});
+
+app.get('/api/posts', (req, res) => {
+    res.json(postList);
 });
 
 app.listen(port, () => {

@@ -1,7 +1,6 @@
-import { users } from "./userData";
+const { users } = require('./userData');
 
-// postList not used now
-export const postList = [
+const postList = [
     {
         id: 'post_1740716126941',
         author: users[1],
@@ -41,4 +40,6 @@ export const postList = [
         ]
     },
 ];
+
+module.exports = { postList };
   
