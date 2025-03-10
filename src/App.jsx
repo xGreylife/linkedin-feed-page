@@ -1,62 +1,51 @@
-import { useEffect, useState, useRef } from 'react'
-import './App.css'
+import { createContext, useEffect, useState, useRef } from 'react';
+import axios from 'axios';
+import './App.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Home from './pages/Home';
+import MyNetwork from './pages/MyNetwork';
+import Jobs from './pages/Jobs';
+import Messaging from './pages/Messaging';
+import Notifications from './pages/Notifications';
+import MyProfile from './pages/MyProfile';
+import RootLayout from './pages/RootLayout';
 
-import Header from './components/Header/Header'
-import LeftSidebar from './components/LeftSidebar/LeftSidebar'
-import Feed from './components/Feed/Feed';
+export const LoggedInUserContext = createContext({});
+import {loggedInUserURL} from './constants/api';
 
-import { postList } from './data/postData';
-import { useDebounce } from './hooks/useDebounce';
+const router = createBrowserRouter([
+    {
+        path: '/', 
+        element: <RootLayout/>, 
+        children:[
+            {index: true, element: <Home />},
+            {path: 'mynetwork', element: <MyNetwork />},
+            {path: 'jobs', element: <Jobs />},
+            {path: 'messaging', element: <Messaging />},
+            {path: 'notifications', element: <Notifications />},
+            {path: 'myprofile', element: <MyProfile/>},
+        ]
+    }
+]);
 
 function App() {
-    // uplifted states from Header
-    const [searchQuery, setSearchQuery] = useState('');
-    const [showUserList, setShowUserList] = useState(false);
-
-    // uplifted states from Feed
-    const [posts, setPosts] = useState(postList);
-
-    // debounce state for search query
-    const debouncedSearchQuery = useDebounce(searchQuery);
-
-    function handleSearchQueryChange(newSearchQuery){
-        setSearchQuery(newSearchQuery);
-    }
-    function handleShowUserListChange(newShowUserList){
-        setShowUserList(newShowUserList);
-    }
-    function handleNewPostCreated(newPost){
-        setPosts([newPost, ...posts]);
-    }
-    function handleSearchPostsByUserId(userId){
-        const filteredPosts = postList.filter(post => post.author.userId === userId);
-        setPosts(filteredPosts);
-    }
+    const [loggedInUser, setLoggedInUser] = useState(null)
 
     useEffect(()=>{
-        console.log('in useEffect : debouncedSearchQuery : ', debouncedSearchQuery);
-        const filteredPosts = postList.filter((post) => {
-            return (post.author.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) || 
-                post.content.toLowerCase().includes(debouncedSearchQuery.toLowerCase()));
+        axios.get(loggedInUserURL)
+        .then((response) => {
+            setLoggedInUser(response.data);
         })
-        setPosts(filteredPosts);
-    }, [debouncedSearchQuery]);
+        .catch((err) => {
+            console.log('Failed to get loggedInUser');
+        });
+    }, []);
 
     return (
-        <>
-        <Header searchQuery={searchQuery} 
-        showUserList={showUserList} 
-        onSearchQueryChange={handleSearchQueryChange} 
-        onShowUserListChange={handleShowUserListChange}
-        onSearchPostsByUserId={handleSearchPostsByUserId}/>
-
-        <div className='page-content'>
-            <LeftSidebar/>
-            <Feed posts={posts} 
-            onNewPostCreated={handleNewPostCreated}/>
-        </div>
-        </>
+        <LoggedInUserContext.Provider value={loggedInUser || {}}>
+           <RouterProvider router={router}/>
+        </LoggedInUserContext.Provider>
     )
 }
 

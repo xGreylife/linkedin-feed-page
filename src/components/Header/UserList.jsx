@@ -8,7 +8,7 @@ export default function UserList( {userList, onSearchPostsByUserId} ) {
                 {userList.map((user) => {
                     return <li key={user.userId}>
                         <IconText iconName='person-fill' size='20px' color='#666666' textContent={user.name}
-                        handleOnClick={()=> onSearchPostsByUserId(user.userId)}/>
+                        handleClick={()=> onSearchPostsByUserId(user.userId)}/>
                     </li>
                 })}
             </ul>

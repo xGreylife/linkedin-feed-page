@@ -1,22 +1,23 @@
 /* --------- Feed Component - Create Post ------------------------------------ */
 
 .feed{
-    gap: 8px;
+    flex-shrink: 1;
+    gap: 0.5rem;
     width: 555px;
     position: relative;
 }
 
 .create-post-input-wrapper{
     display: flex;
-    gap: 10px;
+    gap: 0.625em;
 }
 
 .start-post-btn{
     flex-grow: 1;
-    padding: 15px;
+    padding: 1em;
     border-radius: 50px;
     border: 1px solid #e0e0e0;
-    background-color: #FFFFFF;
+    background-color: var(--linkedin-white);
     text-align: left;
     font-weight: 600;
     color: #3b3b3b;
@@ -35,11 +36,11 @@
 
 .post-add-ons > div{
     border-radius: 4px;
-    padding: 10px;
+    padding: 0.625em;
 }
 
 .post-add-ons span{
-    font-size: 14px;
+    font-size: 0.875em;
     font-weight: 600;
 }
 
@@ -47,7 +48,6 @@
 
 /* .post-modal-overlay{
     position: fixed;
-
 } */
 
 .post-modal{
@@ -65,7 +65,7 @@
 
 .post-modal-header > div{
     border-radius: 10px;
-    padding: 15px;
+    padding: 1em;
 }
 
 .post-modal-close-btn{
@@ -73,15 +73,15 @@
     padding: 10px;
     border-radius: 50%;
     border: none;
-    background-color: #FFFFFF;
+    background-color: var(--linkedin-white);
 }
 
 .post-modal form{
-    gap: 20px;
+    gap: 1.25rem;
 }
 
 .post-modal-textarea{
-    height: 200px;
+    min-height: 200px;
     width: 100%;
     border: none;
 }
@@ -98,11 +98,11 @@
 }
 
 .post-button{
-    padding: 8px 16px;
+    padding: 0.5em 1em;
     border-radius: 50px;
-    border: 1px solid #e0e0e0;
+    border: var(--linkedin-border);
     font-weight: 600;
-    font-size: 14px;
+    font-size: 0.875em;
 }
 
 .disabled-btn{
@@ -118,11 +118,11 @@
 /* --------- Feed Component - Post ------------------------------------ */
 
 .post-list{
-    gap: 6px;
+    gap: 0.5rem;
 }
 
 .post{
-    gap: 5px;
+    gap: 0.3125em;
 }
 
 .author-info-wrapper{
@@ -134,20 +134,20 @@
 }
 
 .author-info > span{
-    font-size: 16px;
+    font-size: 1em;
     font-weight: 600;
 }
   
 .author-info p{
     margin: 0;
-    font-size: 14px;
-    white-space: nowrap;
+    font-size: 0.875em;
+    /* white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; */
 }
 
 .post-content p, .comment-content p{
-    font-size: 14px;
+    font-size: 0.875em;
 }
 
 .post-image{
@@ -162,8 +162,8 @@
 }
 
 .post-stats span{
-    font-size: 14px;
-    color: #666666;
+    font-size: 0.875em;
+    color:  var(--linkedin-grey);
     font-weight: 500;
 }
 

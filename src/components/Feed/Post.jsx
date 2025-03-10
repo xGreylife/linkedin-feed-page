@@ -58,8 +58,8 @@ export default function Post( {post} ) {
             </div>
 
             <div className='flex-row post-add-ons'>
-                <IconText iconName='hand-thumbs-up' size='18px' color='#404040' textContent='Like' handleOnClick={() => handleSetLikes()}/>
-                <IconText iconName='chat-right-text' size='18px' color='#404040' textContent='Comment' handleOnClick={() => handleShowComments()}/>
+                <IconText iconName='hand-thumbs-up' size='18px' color='#404040' textContent='Like' handleClick={() => handleSetLikes()}/>
+                <IconText iconName='chat-right-text' size='18px' color='#404040' textContent='Comment' handleClick={() => handleShowComments()}/>
                 <IconText iconName='arrow-left-right' size='18px' color='#404040' textContent='Repost'/>
                 <IconText iconName='send' size='18px' color='#404040' textContent='Share'/>
             </div>

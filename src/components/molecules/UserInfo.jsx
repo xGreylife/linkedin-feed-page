@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export default function UserInfo({user, className, size = ''}) {
+export default function UserInfo({user, className}) {
   return (
     <div className={className}>
         <span> {user.name} </span>
@@ -8,3 +9,11 @@ export default function UserInfo({user, className, size = ''}) {
     </div>
   )
 }
+
+UserInfo.propTypes = {
+    user:PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        headline: PropTypes.string.isRequired,
+    }).isRequired,
+    className: PropTypes.string, 
+};
