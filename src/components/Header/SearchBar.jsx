@@ -1,21 +1,8 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import Icon from "../atoms/Icon";
 import UserList from "./UserList";
-import {getUsersURL} from '../../constants/api';
 
-export default function SearchBar( {searchQuery, showUserList, onSearchQueryChange, onShowUserListChange, onSearchPostsByUserId} ) {
-    let userList;
-    useEffect(() => {
-        axios.get(getUsersURL)
-        .then((reponse) => {
-            userList = reponse.data.filter((user) => user.name.toLowerCase().includes(searchQuery.toLowerCase()));
-        })
-        .catch((err) => {
-            console.log('Failed to get all users')
-        })
-    }, []);
-
+export default function SearchBar( {searchQuery, showUserList, userList, onSearchQueryChange, onShowUserListChange, onSearchPostsByUserId} ) {
     function handleBlur(){
         // clicking on IconText in UserList fires onBlur for Input element when Searching post by user name/id. 
         // On onBlur the UserList is lost and handleSearchByUserName is not propogated. 

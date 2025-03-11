@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react'
 import { Outlet } from 'react-router-dom'
 import axios from 'axios';
 import Header from '../components/Header/Header'
-import { getPostsURL } from '../constants/api';
+import { getPostsURL, getUsersURL } from '../constants/api';
 import { useDebounce } from '../hooks/useDebounce';
 
 export default function RootLayout() {
     // uplifted states from Header
     const [searchQuery, setSearchQuery] = useState('');
+    const [userList, setUserList] = useState([]);
     const [showUserList, setShowUserList] = useState(false);
     // uplifted states from Feed
     const [posts, setPosts] = useState([]);
@@ -45,6 +46,16 @@ export default function RootLayout() {
     }, []);
 
     useEffect(() => {
+        axios.get(getUsersURL)
+        .then((response) => {
+            setUserList(response.data);
+        })
+        .catch((err) => {
+            console.log('Failed to get users ', err);
+        })
+    }, []);
+
+    useEffect(() => {
         axios.get(getPostsURL)
         .then((response) => {
             const filteredPosts = response.data.filter((post) => {
@@ -56,12 +67,22 @@ export default function RootLayout() {
         .catch((err) => {
             console.log('Failed to get posts for searching')
         });
+
+        axios.get(getUsersURL)
+        .then((response) => {
+            const filterdUsers = response.data.filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            setUserList(filterdUsers);
+        })
+        .catch((err) => {
+            console.log('Failed to get users ', err);
+        });
     }, [debouncedSearchQuery]);
 
     return (
         <>
             <Header searchQuery={searchQuery}
             showUserList={showUserList}
+            userList = {userList}
             onSearchQueryChange={handleSearchQueryChange}
             onShowUserListChange={handleShowUserListChange}
             onSearchPostsByUserId={handleSearchPostsByUserId}/>
