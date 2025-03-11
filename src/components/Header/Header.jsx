@@ -7,7 +7,7 @@ import ProfileMenu from "./ProfileMenu";
 import { navItemData } from "../../data/navItemData";
 import { Link } from "react-router-dom";
 
-export default function Header({searchQuery, showUserList, onSearchQueryChange, onShowUserListChange, onSearchPostsByUserId}) {
+export default function Header({searchQuery, showUserList, userList, onSearchQueryChange, onShowUserListChange, onSearchPostsByUserId}) {
     return ( 
         <header className="header">
             <div className="left-header">
@@ -16,6 +16,7 @@ export default function Header({searchQuery, showUserList, onSearchQueryChange, 
                 </Link>
                 <SearchBar searchQuery={searchQuery}
                     showUserList = {showUserList}
+                    userList = {userList}
                     onSearchQueryChange = {onSearchQueryChange}
                     onShowUserListChange = {onShowUserListChange}
                     onSearchPostsByUserId = {onSearchPostsByUserId}

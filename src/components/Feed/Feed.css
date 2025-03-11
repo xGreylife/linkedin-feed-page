@@ -26,7 +26,8 @@
 .start-post-btn:hover,
 .post-add-ons > div:hover,
 .post-modal-close-btn:hover,
-.post-modal-header > div:hover{
+.post-modal-header > div:hover,
+.date-filter-btn-wapper button:hover{
     background-color: #F3F3F3;
 }
 
@@ -173,4 +174,42 @@
     align-items: center;
     background-color: #f7f7f7;
     margin: 20px 0;
+}
+
+.date-filter{
+    padding: 0rem 0.625rem;
+}
+
+.date-filter i{
+    user-select: none;
+}
+
+.date-filter span{
+    font-size: 0.75em;
+    color: var(--linkedin-grey);
+}
+
+.line{
+    flex-basis: 70%; 
+    border-bottom: 1px solid var(--linkedin-grey);
+}
+
+.date-filter-form{
+    justify-content: space-around;
+}
+
+.date-input label{
+    font-size: 0.875em;
+    font-weight: 500;
+    color: var(--linkedin-grey);
+}  
+
+.date-filter-btn-wapper{
+    gap: 6px;
+}
+
+.date-filter-btn-wapper button{
+    background-color: var(--linkedin-white);
+    border: 1px solid rgb(55, 143, 233);
+    border-radius: 6px;
 }

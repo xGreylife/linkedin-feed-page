@@ -4,13 +4,18 @@ import LeftSidebar from '../components/LeftSidebar/LeftSidebar'
 import Feed from '../components/Feed/Feed'
 
 export default function Home() {
-    const {posts, handleNewPostCreated} = useOutletContext();
+    const {posts, handleNewPostCreated, starDate, endDate,
+        handleStartDateChange, handleEndDateChange} = useOutletContext();
     return (
         <div className='page-content'>
                 <LeftSidebar/>
                 <Feed  
                     posts={posts}    
                     onNewPostCreated={handleNewPostCreated}
+                    starDate={starDate}
+                    endDate={endDate}
+                    handleStartDateChange={handleStartDateChange}
+                    handleEndDateChange={handleEndDateChange}
                 />
         </div>
     )
