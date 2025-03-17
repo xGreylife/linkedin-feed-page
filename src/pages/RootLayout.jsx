@@ -1,127 +1,167 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef, useCallback} from 'react'
 import { Outlet } from 'react-router-dom'
 import axios from 'axios';
 import Header from '../components/Header/Header'
-import { getPostsURL, getUsersURL } from '../constants/api';
+// import { getPostsURL, getUsersURL } from '../constants/api';
 import { useDebounce } from '../hooks/useDebounce';
-import { YEAR_4000 } from '../constants/timeConstants';
 
 export default function RootLayout() {
     // uplifted states from Header
     const [searchQuery, setSearchQuery] = useState('');
     const [userList, setUserList] = useState([]);
     const [showUserList, setShowUserList] = useState(false);
-    // uplifted states from Feed
+    const [selectedUserId, setSelectedUserId] = useState(null);
+
+    // uplifted states from Feed and infinite scroll
     const [posts, setPosts] = useState([]);
-    // debounce state for search query
-    const debouncedSearchQuery = useDebounce(searchQuery);
+    const [isLoading, setIsLoading] = useState(false);
+    const [page, setPage] = useState(1);
+    const loaderRef = useRef(null);
+    const [hasMore, setHasMore] = useState(true);
+    
+    // Track if we need to ignore the current page value
+    const shouldResetPage = useRef(false);
+    
+    // debounce state for search query with 300ms delay
+    const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
     // uplifted state from filter date
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
     function handleSearchQueryChange(newSearchQuery){
         setSearchQuery(newSearchQuery);
+        resetSearch();
     }
+
     function handleNewPostCreated(newPost){
-        setPosts([newPost, ...posts]);
+        setPosts(prevPosts => [newPost, ...prevPosts]);
     }
-    function handleShowUserListChange(value){
-        setShowUserList(!showUserList);
+
+    function handleShowUserListChange(){
+        setShowUserList(prevState => !prevState);
     }
+
     function handleSearchPostsByUserId(userId){
-        axios.get(getPostsURL)
-        .then((response) => {
-            const filteredPosts = response.data.filter(post => post.author.userId === userId)
-            setPosts(filteredPosts);
-        })
-        .catch((err) => {
-            console.log('Failed to get posts for searching ', err);
-        });
+        setSelectedUserId(userId);
+        resetSearch();
     }
+
     function handleStartDateChange(value){
         setStartDate(value);
+        resetSearch();
     }
+
     function handleEndDateChange(value){
         setEndDate(value);
+        resetSearch();
     }
 
-    // function filterPostsByDateRange(){
-    //     axios.get(getPostsURL)
-    //     .then((response) => {
-    //         const startDateTimestamp = startDate === '' ? 0 : Date.parse(startDate);
-    //         const endDateTimestamp = endDate === '' ? YEAR_4000 : Date.parse(endDate);
-    //         const filteredPosts = response.data.filter(post => post.timestamp >= startDateTimestamp && post.timestamp <= endDateTimestamp);
-    //         setPosts(filteredPosts);
-    //     })
-    //     .catch((err) => {
-    //         console.log('Failed to get posts for date filter ', err);
-    //     })
-    // }
+    function resetSearch() {
+        setPosts([]);
+        shouldResetPage.current = true; 
+        setHasMore(true);
+    }
 
     useEffect(() => {
-        axios.get(getPostsURL)
-        .then((response) => {
-            const startDateTimestamp = startDate === '' ? 0 : Date.parse(startDate);
-            const endDateTimestamp = endDate === '' ? YEAR_4000 : Date.parse(endDate);
-            const filteredPosts = response.data.filter(post => post.timestamp >= startDateTimestamp && post.timestamp <= endDateTimestamp);
-            setPosts(filteredPosts);
-        })
-        .catch((err) => {
-            console.log('Failed to get posts for date filter ', err);
-        })
-    }, [startDate, endDate]);
-
-    useEffect(() => {
-        axios.get(getPostsURL)
-        .then((response) => {
-            setPosts(response.data);
-        })
-        .catch((err) => {
-            console.log('Failed to get posts ', err);
-        });
-    }, []);
-
-    useEffect(() => {
-        axios.get(getUsersURL)
+        axios.get(`http://localhost:5000/api/users?search=${debouncedSearchQuery}`)
         .then((response) => {
             setUserList(response.data);
         })
         .catch((err) => {
-            console.log('Failed to get users ', err);
-        })
-    }, [])
-
-    useEffect(() => {
-        axios.get(getPostsURL)
-        .then((response) => {
-            const filteredPosts = response.data.filter((post) => {
-                return (post.author.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) || 
-                    post.content.toLowerCase().includes(debouncedSearchQuery.toLowerCase()));
-            })
-            setPosts(filteredPosts);
-        })
-        .catch((err) => {
-            console.log('Failed to get posts for searching')
-        });
-
-        axios.get(getUsersURL)
-        .then((response) => {
-            const filterdUsers = response.data.filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()));
-            setUserList(filterdUsers);
-        })
-        .catch((err) => {
-            console.log('Failed to get users ', err);
+            console.log('Failed to get filtered user list : ', err);
         })
     }, [debouncedSearchQuery]);
+
+    useEffect(() => {
+        setIsLoading(false);
+        
+        setPosts([]);
+        setPage(1); 
+        setHasMore(true);
+        shouldResetPage.current = true;
+        
+        // ensure state updates before calling fetch posts
+        const timer = setTimeout(() => {
+            fetchPosts();  
+        }, 0);
+        
+        return () => clearTimeout(timer);
+    }, [debouncedSearchQuery, selectedUserId, startDate, endDate]);
+
+    const fetchPosts = useCallback(async () => {
+        if(isLoading || !hasMore) return;
+        setIsLoading(true);
+
+        // page to fetch
+        const pageToFetch = shouldResetPage.current ? 1 : page;
+        // console.log(`Fetching page ${pageToFetch} for query: ${debouncedSearchQuery}`);
+        
+        // Reset the flag
+        shouldResetPage.current = false;
+
+        const startDateTimestamp = startDate === '' ? 0 : Date.parse(startDate);
+        const endDateTimestamp = endDate === '' ? Number.MAX_SAFE_INTEGER : Date.parse(endDate);
+
+        try {
+            const response = await axios.get('http://localhost:5000/api/posts', {
+                params: {
+                    page: pageToFetch, // Use our determined page
+                    search: debouncedSearchQuery,
+                    userId: selectedUserId,
+                    startDate: startDateTimestamp,
+                    endDate: endDateTimestamp,
+                }
+            });
+            
+            const filteredPosts = response.data.posts || [];
+
+            if (filteredPosts.length === 0) {
+                if (pageToFetch === 1) {
+                    setPosts([]);
+                }
+                setHasMore(false);
+            } else {
+                setPosts(prevPosts => pageToFetch === 1 ? filteredPosts : [...prevPosts, ...filteredPosts]);
+                setPage(pageToFetch + 1);
+            }
+        } catch(err) {
+            console.log('Failed to fetch posts : ', err);
+            setHasMore(false);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [isLoading, debouncedSearchQuery, selectedUserId, startDate, endDate, hasMore, page]);
+
+    // Infinite scroll observer
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            const target = entries[0];
+            if (target.isIntersecting && !isLoading && hasMore) {
+                fetchPosts();
+            }
+        }, { threshold: 0.1 });
+
+        const currentLoaderRef = loaderRef.current;
+        if (currentLoaderRef) {
+            observer.observe(currentLoaderRef);
+        }
+
+        return () => {
+            if (currentLoaderRef) {
+                observer.unobserve(currentLoaderRef);
+            }
+        }
+    }, [fetchPosts, isLoading, hasMore]);
 
     return (
         <>
             <Header searchQuery={searchQuery}
-            showUserList={showUserList}
-            userList = {userList}
-            onSearchQueryChange={handleSearchQueryChange}
-            onShowUserListChange={handleShowUserListChange}
-            onSearchPostsByUserId={handleSearchPostsByUserId}/>
+                showUserList={showUserList}
+                userList={userList}
+                onSearchQueryChange={handleSearchQueryChange}
+                onShowUserListChange={handleShowUserListChange}
+                onSearchPostsByUserId={handleSearchPostsByUserId}/>
             <main>
                 <Outlet context={{
                     posts, 
@@ -130,6 +170,9 @@ export default function RootLayout() {
                     endDate,
                     handleStartDateChange,
                     handleEndDateChange,
+                    isLoading,
+                    loaderRef,
+                    hasMore
                 }}/>
             </main>
         </>

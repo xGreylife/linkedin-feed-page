@@ -5,7 +5,8 @@ import Feed from '../components/Feed/Feed'
 
 export default function Home() {
     const {posts, handleNewPostCreated, starDate, endDate,
-        handleStartDateChange, handleEndDateChange} = useOutletContext();
+        handleStartDateChange, handleEndDateChange, 
+        isLoading, loaderRef} = useOutletContext();
     return (
         <div className='page-content'>
                 <LeftSidebar/>
@@ -16,6 +17,8 @@ export default function Home() {
                     endDate={endDate}
                     handleStartDateChange={handleStartDateChange}
                     handleEndDateChange={handleEndDateChange}
+                    isLoading = {isLoading}
+                    loaderRef = {loaderRef}
                 />
         </div>
     )

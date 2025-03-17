@@ -345,4 +345,8 @@
     .post-add-ons span{
         display: none;
     }
+
+    .date-filter-form{
+        flex-direction: column;
+    }
 }

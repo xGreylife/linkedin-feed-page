@@ -31,7 +31,7 @@ export default function Post( {post} ) {
     }
 
     return (
-        <div className='page-component post'>
+        <div className='page-component post' data-timestamp={post.timestamp}>
             <div className='post-header'>
                 <div className='flex-row author-info-wrapper'>
                     <UserAvatar user={post.author} className='avatar-medium'/>
@@ -54,7 +54,7 @@ export default function Post( {post} ) {
 
             <div className='flex-row post-stats'>
                 <IconText iconName={'hand-thumbs-up'} size='14px' color={'#378FE9'} textContent={`${likes} Likes`}/>
-                <span className='light-text'> {post.comments.length} Comments </span>
+                <span className='light-text'> {post.comments? post.comments.length : 0} Comments </span>
             </div>
 
             <div className='flex-row post-add-ons'>
@@ -64,7 +64,7 @@ export default function Post( {post} ) {
                 <IconText iconName='send' size='18px' color='#404040' textContent='Share'/>
             </div>
             
-            {showComments && (
+            {(post.comments && showComments) && (
                 <div className='comment-list'>
                     {post.comments.map((comment) => {
                         return <Comment key={comment.id} comment={comment}/>

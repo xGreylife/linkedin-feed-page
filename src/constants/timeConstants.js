@@ -6,4 +6,3 @@ export const DAY = 24 * HOUR;
 export const WEEK = 7 * DAY;
 
 export const DEBOUNCE_DELAY = 500;
-export const YEAR_4000 = 64060588800000;

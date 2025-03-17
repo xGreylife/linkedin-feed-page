@@ -4,7 +4,8 @@ import CreatePost from './CreatePost'
 import PostList from './PostList';
 import DateFilter from './DateFilter';
 
-export default function Feed({posts, onNewPostCreated, startDate, endDate, handleStartDateChange, handleEndDateChange}) {
+export default function Feed({posts, onNewPostCreated, startDate, endDate, handleStartDateChange, handleEndDateChange, 
+    isLoading, loaderRef}) {
     return (
         <div className='flex-col feed'>
             <CreatePost onNewPostCreated={onNewPostCreated}/>
@@ -12,7 +13,7 @@ export default function Feed({posts, onNewPostCreated, startDate, endDate, handl
             endDate={endDate}
             handleStartDateChange = {handleStartDateChange} 
             handleEndDateChange = {handleEndDateChange}/>
-            <PostList posts={posts}/>
+            <PostList posts={posts} isLoading = {isLoading} loaderRef = {loaderRef}/>
         </div>
     )
 } 

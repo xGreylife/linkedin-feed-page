@@ -30,7 +30,7 @@ export default function CreatePost( {onNewPostCreated} ) {
         const mediaUrl = mediaFile ? URL.createObjectURL(mediaFile) : null;
         
         const newPost = {
-            id: `post_${currentTime}`,
+            id: `post_${loggedInUser.id}_${currentTime}`,
             author: {
                 id: loggedInUser.id,
                 name: loggedInUser.name,
