@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const _ = require('lodash');
 const app = express();
 const port = 5000;
 const { loggedInUser, users } = require('./data/userData');
@@ -31,19 +32,21 @@ function generateDummyPosts(count){
 const dummyPosts = generateDummyPosts(10);
 const allPosts = [...postList, ...dummyPosts];
 
+const getUserListBySearchQuery = (req, res) => {
+    const search = req.query.search || '';
+    if(search){ 
+        const filteredUsers = _.filter(users, user => _.toLower(user.name).includes(_.toLower(search)));
+        return res.json(filteredUsers);
+    }
+    res.json(users);
+};
+
 //endpoints
 app.get('/api/user', (req, res) => {
     res.json(loggedInUser);
 });
 
-app.get('/api/users', (req, res) => {
-    const search = req.query.search || '';
-    if(search){
-        const filteredUsers = users.filter(user => user.name.toLowerCase().includes(search.toLowerCase()));
-        return res.json(filteredUsers);
-    }
-    res.json(users);
-});
+app.get('/api/users', getUserListBySearchQuery);
 
 app.get('/api/posts', (req, res) => {
     const page = parseInt(req.query.page) || 1;

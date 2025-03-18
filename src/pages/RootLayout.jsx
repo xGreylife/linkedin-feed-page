@@ -23,7 +23,7 @@ export default function RootLayout() {
     const shouldResetPage = useRef(false);
     
     // debounce state for search query with 300ms delay
-    const debouncedSearchQuery = useDebounce(searchQuery, 300);
+    const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
     // uplifted state from filter date
     const [startDate, setStartDate] = useState('');
@@ -31,7 +31,7 @@ export default function RootLayout() {
 
     function handleSearchQueryChange(newSearchQuery){
         setSearchQuery(newSearchQuery);
-        resetSearch();
+        // resetSearch();
     }
 
     function handleNewPostCreated(newPost){
@@ -44,24 +44,24 @@ export default function RootLayout() {
 
     function handleSearchPostsByUserId(userId){
         setSelectedUserId(userId);
-        resetSearch();
+        // resetSearch();
     }
 
     function handleStartDateChange(value){
         setStartDate(value);
-        resetSearch();
+        // resetSearch();
     }
 
     function handleEndDateChange(value){
         setEndDate(value);
-        resetSearch();
+        // resetSearch();
     }
 
-    function resetSearch() {
-        setPosts([]);
-        shouldResetPage.current = true; 
-        setHasMore(true);
-    }
+    // function resetSearch() {
+    //     setPosts([]);
+    //     shouldResetPage.current = true; 
+    //     setHasMore(true);
+    // }
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/users?search=${debouncedSearchQuery}`)
