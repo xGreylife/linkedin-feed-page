@@ -12,3 +12,9 @@ export const contentTypes = [
     {iconName: 'newspaper', textContent: 'Newsletters', key: 'cnt_type_3',},
     {iconName: 'calendar-event', textContent: 'Events', key: 'cnt_type_4',},
 ];
+
+export const postAddOns = [
+    {iconName: 'image-fill', textContent: 'Media', color: '#378FE9', key: 'post_add_on_1'},
+    {iconName: 'calendar-week-fill', textContent: 'Event', color: '#C37D17', key: 'post_add_on_2'},
+    {iconName: 'newspaper', textContent: 'Article', color: '#C37D17', key: 'post_add_on_3'},
+];
