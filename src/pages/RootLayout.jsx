@@ -186,237 +186,168 @@ import { connect } from 'react-redux';
 import Header from '../components/Header/Header';
 import { useDebounce } from '../hooks/useDebounce';
 import {
-  setPosts,
-  addPosts,
-  addNewPost,
-  setLoading,
-  setPage,
-  setHasMore,
-  resetPosts,
-  setUserList,
-  toggleUserList,
-  setSelectedUserId,
-  setSearchQuery,
-  setDebouncedSearchQuery,
-  setStartDate,
-  setEndDate
-} from '../redux/actions/index';
-
-function RootLayout(props) {
-  const {
-    // Redux state
-    posts,
-    isLoading,
-    page,
-    hasMore,
-    userList,
-    showUserList,
-    selectedUserId,
-    searchQuery,
-    startDate,
-    endDate,
-    
-    // Redux actions
     setPosts,
     addPosts,
-    addNewPost,
     setLoading,
     setPage,
     setHasMore,
-    resetPosts,
     setUserList,
-    toggleUserList,
-    setSelectedUserId,
-    setSearchQuery,
     setDebouncedSearchQuery,
-    setStartDate,
-    setEndDate
-  } = props;
+}   from '../redux/actions';
 
-  const loaderRef = useRef(null);
-  const shouldResetPage = useRef(false);
-  
-  // Use the debounce hook with the searchQuery from Redux
-  const debouncedSearchQuery = useDebounce(searchQuery, 500);
-  
-  // Update the debounced search query in Redux when it changes
-  useEffect(() => {
-    setDebouncedSearchQuery(debouncedSearchQuery);
-  }, [debouncedSearchQuery, setDebouncedSearchQuery]);
+function RootLayout(props) {
+    const {
+        // Redux state
+        isLoading,
+        page,
+        hasMore,
+        selectedUserId,
+        searchQuery,
+        startDate,
+        endDate,
+        
+        // Redux actions
+        setPosts,
+        addPosts,
+        setLoading,
+        setPage,
+        setHasMore,
+        setUserList,
+        setDebouncedSearchQuery,
+    } = props;
 
-  function handleSearchQueryChange(newSearchQuery) {
-    setSearchQuery(newSearchQuery);
-  }
-
-  function handleNewPostCreated(newPost) {
-    addNewPost(newPost);
-  }
-
-  function handleShowUserListChange() {
-    toggleUserList();
-  }
-
-  function handleSearchPostsByUserId(userId) {
-    setSelectedUserId(userId);
-  }
-
-  function handleStartDateChange(value) {
-    setStartDate(value);
-  }
-
-  function handleEndDateChange(value) {
-    setEndDate(value);
-  }
-
-  useEffect(() => {
-    axios.get(`http://localhost:5000/api/users?search=${debouncedSearchQuery}`)
-      .then((response) => {
-        setUserList(response.data);
-      })
-      .catch((err) => {
-        console.log('Failed to get filtered user list : ', err);
-      });
-  }, [debouncedSearchQuery, setUserList]);
-
-  useEffect(() => {
-    setLoading(false);
+    const loaderRef = useRef(null);
+    const shouldResetPage = useRef(false);
     
-    setPosts([]);
-    setPage(1);
-    setHasMore(true);
-    shouldResetPage.current = true;
+    const debouncedSearchQuery = useDebounce(searchQuery, 500);
     
-    // ensure state updates before calling fetch posts
-    const timer = setTimeout(() => {
-      fetchPosts();
-    }, 0);
-    
-    return () => clearTimeout(timer);
-  }, [debouncedSearchQuery, selectedUserId, startDate, endDate]);
+    useEffect(() => {
+        setDebouncedSearchQuery(debouncedSearchQuery);
+    }, [debouncedSearchQuery, setDebouncedSearchQuery]);
 
-  const fetchPosts = useCallback(async () => {
-    if (isLoading || !hasMore) return;
-    setLoading(true);
+    useEffect(() => {
+        axios.get(`http://localhost:5000/api/users?search=${debouncedSearchQuery}`)
+        .then((response) => {
+            setUserList(response.data);
+        })
+        .catch((err) => {
+            console.log('Failed to get filtered user list : ', err);
+        });
+    }, [debouncedSearchQuery, setUserList]);
 
-    // page to fetch
-    const pageToFetch = shouldResetPage.current ? 1 : page;
-    
-    // Reset the flag
-    shouldResetPage.current = false;
+    useEffect(() => {
+        setLoading(false);
+        setPosts([]);
+        setPage(1);
+        setHasMore(true);
+        shouldResetPage.current = true;
+        
+        // ensure state updates before calling fetch posts
+        const timer = setTimeout(() => {
+            fetchPosts();
+        }, 0);
+        
+        return () => clearTimeout(timer);
+    }, [debouncedSearchQuery, selectedUserId, startDate, endDate]);
 
-    const startDateTimestamp = startDate === '' ? 0 : Date.parse(startDate);
-    const endDateTimestamp = endDate === '' ? Number.MAX_SAFE_INTEGER : Date.parse(endDate);
+    const fetchPosts = useCallback(async () => {
+        if (isLoading || !hasMore) return;
+        setLoading(true);
 
-    try {
-      const response = await axios.get('http://localhost:5000/api/posts', {
-        params: {
-          page: pageToFetch,
-          search: debouncedSearchQuery,
-          userId: selectedUserId,
-          startDate: startDateTimestamp,
-          endDate: endDateTimestamp,
+        // page to fetch
+        const pageToFetch = shouldResetPage.current ? 1 : page;
+        
+        // Reset the flag
+        shouldResetPage.current = false;
+
+        const startDateTimestamp = startDate === '' ? 0 : Date.parse(startDate);
+        const endDateTimestamp = endDate === '' ? Number.MAX_SAFE_INTEGER : Date.parse(endDate);
+
+        try {
+            const response = await axios.get('http://localhost:5000/api/posts', {
+                params: {
+                    page: pageToFetch,
+                    search: debouncedSearchQuery,
+                    userId: selectedUserId,
+                    startDate: startDateTimestamp,
+                    endDate: endDateTimestamp,
+                }
+            });
+            
+            const filteredPosts = response.data.posts || [];
+
+            if (filteredPosts.length === 0) {
+                if (pageToFetch === 1) {
+                    setPosts([]);
+                }
+                setHasMore(false);
+            } else {
+                if (pageToFetch === 1) {
+                    setPosts(filteredPosts);
+                } else {
+                    addPosts(filteredPosts);
+                }
+                setPage(pageToFetch + 1);
+            }
+        } catch(err) {
+            console.log('Failed to fetch posts : ', err);
+            setHasMore(false);
+        } finally {
+            setLoading(false);
         }
-      });
-      
-      const filteredPosts = response.data.posts || [];
+    }, [isLoading, debouncedSearchQuery, selectedUserId, startDate, endDate, hasMore, page, setPosts, addPosts, setPage, setHasMore, setLoading]);
 
-      if (filteredPosts.length === 0) {
-        if (pageToFetch === 1) {
-          setPosts([]);
+    // Infinite scroll observer
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && !isLoading && hasMore) {
+            fetchPosts();
         }
-        setHasMore(false);
-      } else {
-        if (pageToFetch === 1) {
-          setPosts(filteredPosts);
-        } else {
-          addPosts(filteredPosts);
+        }, { threshold: 0.1 });
+
+        const currentLoaderRef = loaderRef.current;
+        if (currentLoaderRef) {
+            observer.observe(currentLoaderRef);
         }
-        setPage(pageToFetch + 1);
-      }
-    } catch(err) {
-      console.log('Failed to fetch posts : ', err);
-      setHasMore(false);
-    } finally {
-      setLoading(false);
-    }
-  }, [isLoading, debouncedSearchQuery, selectedUserId, startDate, endDate, hasMore, page, setPosts, addPosts, setPage, setHasMore, setLoading]);
 
-  // Infinite scroll observer
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const target = entries[0];
-      if (target.isIntersecting && !isLoading && hasMore) {
-        fetchPosts();
-      }
-    }, { threshold: 0.1 });
+        return () => {
+            if (currentLoaderRef) {
+                observer.unobserve(currentLoaderRef);
+            }
+        };
+    }, [fetchPosts, isLoading, hasMore]);
 
-    const currentLoaderRef = loaderRef.current;
-    if (currentLoaderRef) {
-      observer.observe(currentLoaderRef);
-    }
-
-    return () => {
-      if (currentLoaderRef) {
-        observer.unobserve(currentLoaderRef);
-      }
-    };
-  }, [fetchPosts, isLoading, hasMore]);
-
-  return (
-    <>
-      <Header 
-        searchQuery={searchQuery}
-        showUserList={showUserList}
-        userList={userList}
-        onSearchQueryChange={handleSearchQueryChange}
-        onShowUserListChange={handleShowUserListChange}
-        onSearchPostsByUserId={handleSearchPostsByUserId}
-      />
-      <main>
-        <Outlet context={{
-          posts,
-          handleNewPostCreated,
-          startDate,
-          endDate,
-          handleStartDateChange,
-          handleEndDateChange,
-          isLoading,
-          loaderRef,
-          hasMore
-        }}/>
-      </main>
-    </>
-  );
+    return (
+        <>
+            <Header />
+            <main>
+                <Outlet context={{
+                loaderRef,
+                }}/>
+            </main>
+        </>
+    );
 }
 
 const mapStateToProps = (state) => ({
-  posts: state.posts.posts,
-  isLoading: state.posts.isLoading,
-  page: state.posts.page,
-  hasMore: state.posts.hasMore,
-  userList: state.user.userList,
-  showUserList: state.user.showUserList,
-  selectedUserId: state.user.selectedUserId,
-  searchQuery: state.search.searchQuery,
-  startDate: state.search.startDate,
-  endDate: state.search.endDate
+    isLoading: state.posts.isLoading,
+    page: state.posts.page,
+    hasMore: state.posts.hasMore,
+    selectedUserId: state.user.selectedUserId,
+    searchQuery: state.search.searchQuery,
+    startDate: state.search.startDate,
+    endDate: state.search.endDate
 });
 
 const mapDispatchToProps = {
-  setPosts,
-  addPosts,
-  addNewPost,
-  setLoading,
-  setPage,
-  setHasMore,
-  resetPosts,
-  setUserList,
-  toggleUserList,
-  setSelectedUserId,
-  setSearchQuery,
-  setDebouncedSearchQuery,
-  setStartDate,
-  setEndDate
+    setPosts,
+    addPosts,
+    setLoading,
+    setPage,
+    setHasMore,
+    setUserList,
+    setDebouncedSearchQuery,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootLayout);

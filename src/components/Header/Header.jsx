@@ -7,20 +7,14 @@ import ProfileMenu from "./ProfileMenu";
 import { navItemData } from "../../data/navItemData";
 import { Link } from "react-router-dom";
 
-export default function Header({searchQuery, showUserList, userList, onSearchQueryChange, onShowUserListChange, onSearchPostsByUserId}) {
+export default function Header() {
     return ( 
         <header className="header">
             <div className="left-header">
                 <Link to="/">
                     <Icon iconName='linkedin' size='32px' color='#0B66C2'/>
                 </Link>
-                <SearchBar searchQuery={searchQuery}
-                    showUserList = {showUserList}
-                    userList = {userList}
-                    onSearchQueryChange = {onSearchQueryChange}
-                    onShowUserListChange = {onShowUserListChange}
-                    onSearchPostsByUserId = {onSearchPostsByUserId}
-                />
+                <SearchBar />
             </div>
 
             <nav className="navbar">
