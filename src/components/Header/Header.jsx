@@ -4,8 +4,9 @@ import Icon from "../atoms/Icon";
 import SearchBar from "./SearchBar";
 import NavItem from "./NavItem";
 import ProfileMenu from "./ProfileMenu";
-import { navItemData } from "../../data/navItemData";
+import { navItemData } from "../../data/componentListsData";
 import { Link } from "react-router-dom";
+import map from 'lodash/map'
 
 export default function Header() {
     return ( 
@@ -19,7 +20,7 @@ export default function Header() {
 
             <nav className="navbar">
                 <ul>
-                    { navItemData.map((navItem) => <NavItem 
+                    { map(navItemData, (navItem) => <NavItem 
                     icon={navItem.icon}
                     label={navItem.label}
                     key={navItem.key}

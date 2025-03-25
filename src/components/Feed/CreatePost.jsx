@@ -5,6 +5,8 @@ import IconText from '../molecules/IconText'
 import Icon from '../atoms/Icon'
 import { connect } from 'react-redux'
 import { addNewPost } from '../../redux/actions'
+import { postAddOns } from '../../data/componentListsData'
+import map from 'lodash/map' 
 
 function CreatePost( {addNewPost} ) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,9 +61,13 @@ function CreatePost( {addNewPost} ) {
                 </div>
 
                 <div className='flex-row post-add-ons'>
-                    <IconText iconName='image-fill' size='20px' color='#378FE9' textContent='Media'/>
-                    <IconText iconName='calendar-week-fill' size='20px' color='#C37D17' textContent='Event'/>
-                    <IconText iconName='newspaper' size='20px' color='#C37D17' textContent='Article'/>
+                    {map(postAddOns, postAddOnElement => <IconText 
+                        iconName={postAddOnElement.iconName} 
+                        size='20px' 
+                        color={postAddOnElement.color} 
+                        textContent={postAddOnElement.textContent}
+                        key={postAddOnElement.key}/>
+                    )}
                 </div>
             </div>
 

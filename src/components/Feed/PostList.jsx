@@ -2,6 +2,7 @@ import React from 'react'
 import Post from './Post'
 import BeatLoader from "react-spinners/BeatLoader";
 import { connect } from 'react-redux';
+import map from 'lodash/map'
 
 function PostList( {posts, isLoading, loaderRef} ) {
     return (
@@ -13,13 +14,13 @@ function PostList( {posts, isLoading, loaderRef} ) {
                             <p> No posts to display !</p>
                         </div>
                     ):(
-                        posts.map((post) => {
+                        map(posts, (post) => {
                             return <Post key={post.id} post = {post}/>
                         })
                     )}
                 </>
             </div>
-            <div ref={loaderRef}>{isLoading && (
+            <div className='align-self-center' ref={loaderRef}>{isLoading && (
                 <BeatLoader
                     color='#378FE9'
                     loading={true}
@@ -29,7 +30,6 @@ function PostList( {posts, isLoading, loaderRef} ) {
                 />
             )}</div>
         </>
-        
     )
 }
 

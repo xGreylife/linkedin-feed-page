@@ -75,6 +75,10 @@
     display: none;
 }
 
+.align-self-center{
+    align-self: center;
+}
+
 /* --------- Header Component - left header ------------------------------------ */
 
 .header{

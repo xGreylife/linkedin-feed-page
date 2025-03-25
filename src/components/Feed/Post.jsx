@@ -5,6 +5,8 @@ import Icon from '../atoms/Icon'
 import IconText from '../molecules/IconText'
 import Comment from './Comment'
 import { MINUTE, HOUR, DAY, WEEK } from '../../constants/timeConstants'
+import floor from 'lodash/floor'
+import map from 'lodash/map'
 
 export default function Post( {post} ) {
     const [likes, setLikes] = useState(post.likes);
@@ -21,10 +23,10 @@ export default function Post( {post} ) {
     function getElapsedTime(postTime){
         const currentTime = Date.now();
         const differnce = currentTime - postTime;
-        const timeStamp = (differnce >= WEEK) ? `${Math.floor(differnce / WEEK)}w`:
-                            (differnce >= DAY) ? `${Math.floor(differnce / DAY)}d`:
-                            (differnce >= HOUR) ? `${Math.floor(differnce / HOUR)}h`:
-                            (differnce >= 2 * MINUTE) ? `${Math.floor(differnce / MINUTE)}m`:
+        const timeStamp = (differnce >= WEEK) ? `${floor(differnce / WEEK)}w`:
+                            (differnce >= DAY) ? `${floor(differnce / DAY)}d`:
+                            (differnce >= HOUR) ? `${floor(differnce / HOUR)}h`:
+                            (differnce >= 2 * MINUTE) ? `${floor(differnce / MINUTE)}m`:
                             `Just Now`;
 
         return timeStamp;
@@ -66,7 +68,7 @@ export default function Post( {post} ) {
             
             {(post.comments && showComments) && (
                 <div className='comment-list'>
-                    {post.comments.map((comment) => {
+                    {map(post.comments, (comment) => {
                         return <Comment key={comment.id} comment={comment}/>
                     })}
                 </div>

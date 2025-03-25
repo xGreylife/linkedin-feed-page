@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const _ = require('lodash');
 const app = express();
 const port = 5000;
 const { loggedInUser, users } = require('./data/userData');
@@ -13,13 +14,13 @@ app.use(express.json());
 function generateDummyPosts(count){
     const dummyPosts = [];
     for(let i = 1; i<=count; i++){
-        const randomTimestampIndex = Math.floor(Math.random() * 10);
-        const randomContentIndex = Math.floor(Math.random() * 10);
-        const randomLikesIndex = Math.floor(Math.random() * 10);
-        const randomUserIndex = Math.floor(Math.random() * 10);
+        const randomTimestampIndex = _.random(0, 9);
+        const randomContentIndex = _.random(0, 9);
+        const randomLikesIndex = _.random(0, 9);
+        const randomUserIndex = _.random(0, 9);
         dummyPosts.push({
             id: `post_${i}`,
-            author: users[1],
+            author: users[randomUserIndex],
             content: contentArr[randomContentIndex].content,
             image: contentArr[randomContentIndex].image,
             timestamp: timestampArr[randomTimestampIndex],
@@ -28,58 +29,58 @@ function generateDummyPosts(count){
     }
     return dummyPosts;
 }
-const dummyPosts = generateDummyPosts(10);
+const dummyPosts = generateDummyPosts(30);
 const allPosts = [...postList, ...dummyPosts];
 
-//endpoints
-app.get('/api/user', (req, res) => {
-    res.json(loggedInUser);
-});
-
-app.get('/api/users', (req, res) => {
+const getUserListBySearchQuery = (req, res) => {
     const search = req.query.search || '';
-    if(search){
-        const filteredUsers = users.filter(user => user.name.toLowerCase().includes(search.toLowerCase()));
+
+    const filterUsersBySearchQuery = user => _.includes(_.toLower(user.name), _.toLower(search));
+
+    if(search){ 
+        const filteredUsers = _.filter(users, filterUsersBySearchQuery);
         return res.json(filteredUsers);
     }
     res.json(users);
-});
+};
 
-app.get('/api/posts', (req, res) => {
-    const page = parseInt(req.query.page) || 1;
+const getPostsUsingFilters = (req, res) => {
+    const page = _.parseInt(req.query.page) || 1;
     const search = req.query.search || '';
-    const userId = parseInt(req.query.userId) || null;
-    const startDate = req.query.startDate ? parseInt(req.query.startDate) : 0;
-    const endDate = req.query.endDate ? parseInt(req.query.endDate) : Number.MAX_SAFE_INTEGER;
+    const userId = _.parseInt(req.query.userId) || null;
+    const startDate = req.query.startDate ? _.parseInt(req.query.startDate) : 0;
+    const endDate = req.query.endDate ? _.parseInt(req.query.endDate) : Number.MAX_SAFE_INTEGER;
 
-    const params = {
-        page: page,
-        search: search,
-        userId: userId,
-        startDate: startDate,
-        endDate: endDate,
-    }
-
-    // console.log('params : ', params);
-
-    let filteredPosts = allPosts.filter((post) => {
+    const filterPostsUsingFilters = (post) => {
         const isInDateRange = post.timestamp >= startDate && post.timestamp <= endDate;
-        const isCorrectUser = userId ? post.author.userId === userId : true;
+        const isCorrectUser = userId ? post.author?.userId === userId : true;
         const isMatchingSearch = search === '' || 
-            post.author.name.toLowerCase().includes(search.toLowerCase()) ||
-            post.content.toLowerCase().includes(search.toLowerCase());
+            _.includes(_.toLower(post.author.name), _.toLower(search)) ||
+            _.includes(_.toLower(post.content), _.toLower(search));
 
         return (isInDateRange && isCorrectUser && isMatchingSearch);
-    })
+    };
 
-    filteredPosts.sort((postA, postB) => postA.timestamp - postB.timestamp);
+    // const params = {
+    //     page: page,
+    //     search: search,
+    //     userId: userId,
+    //     startDate: startDate,
+    //     endDate: endDate,
+    // };
+    // console.log('params : ', params);
+
+    let filteredPosts = _.filter(allPosts, filterPostsUsingFilters);
+
+    if(startDate !== 0 || endDate !== Number.MAX_SAFE_INTEGER)
+        filteredPosts = _.sortBy(filteredPosts, post => post.timestamp);
 
     const batchSize = 10;
     const totalPosts = filteredPosts.length;
-    const totalPages = Math.ceil(totalPosts / batchSize);
+    const totalPages = _.ceil(totalPosts / batchSize);
     const startIndex = (page - 1) * batchSize;
     const endIndex = startIndex + batchSize > totalPosts ? totalPosts : startIndex + batchSize;
-    const slicedPosts = filteredPosts.slice(startIndex, endIndex);
+    const slicedPosts = _.slice(filteredPosts, startIndex, endIndex);
 
     setTimeout(() => {
         res.json({
@@ -89,9 +90,18 @@ app.get('/api/posts', (req, res) => {
             totalPosts: totalPosts,
         });
     }, 1000);
+};
+
+//endpoints
+app.get('/api/user', (req, res) => {
+    res.json(loggedInUser);
 });
 
-app.post('api/post', (req, res) => {
+app.get('/api/users', getUserListBySearchQuery);
+
+app.get('/api/posts', getPostsUsingFilters);
+
+app.post('/api/post', (req, res) => {
 
 });
 
