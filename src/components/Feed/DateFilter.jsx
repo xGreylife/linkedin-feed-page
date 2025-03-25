@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import Icon from '../atoms/Icon'
+import { connect } from 'react-redux';
+import { setStartDate, setEndDate } from '../../redux/actions';
 
-export default function DateFilter({startDate, endDate, handleStartDateChange, handleEndDateChange}) {
+function DateFilter({startDate, endDate, setStartDate, setEndDate}) {
     const [showDateFilter, setShowDateFilter] = useState(false);
 
     function handleClick(){
@@ -20,15 +22,27 @@ export default function DateFilter({startDate, endDate, handleStartDateChange, h
                 <div className='date-filter-form page-component flex-row'>
                     <div className='date-input flex-row'>
                         <label htmlFor="">Start date : </label>
-                        <input type="date" value={startDate} onChange={(e) => {handleStartDateChange(e.target.value)}}/>
+                        <input type="date" value={startDate} onChange={(e) => {setStartDate(e.target.value)}}/>
                     </div>
                     
                     <div className='date-input flex-row'>
                         <label htmlFor="">End date : </label>
-                        <input type="date" value={endDate} onChange={(e) => {handleEndDateChange(e.target.value)}}/>
+                        <input type="date" value={endDate} onChange={(e) => {setEndDate(e.target.value)}}/>
                     </div>
                 </div>
             )}
         </>
     )
 }
+
+const mapStateToProps = (state) => ({
+    startDate: state.search.startDate,
+    endDate: state.search.endDate,
+});
+
+const mapDispatchToProps = {
+    setStartDate,
+    setEndDate,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DateFilter);

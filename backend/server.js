@@ -45,15 +45,15 @@ const getUserListBySearchQuery = (req, res) => {
 };
 
 const getPostsUsingFilters = (req, res) => {
-    const page = parseInt(req.query.page) || 1;
+    const page = _.parseInt(req.query.page) || 1;
     const search = req.query.search || '';
-    const userId = parseInt(req.query.userId) || null;
-    const startDate = req.query.startDate ? parseInt(req.query.startDate) : 0;
-    const endDate = req.query.endDate ? parseInt(req.query.endDate) : Number.MAX_SAFE_INTEGER;
+    const userId = _.parseInt(req.query.userId) || null;
+    const startDate = req.query.startDate ? _.parseInt(req.query.startDate) : 0;
+    const endDate = req.query.endDate ? _.parseInt(req.query.endDate) : Number.MAX_SAFE_INTEGER;
 
     const filterPostsUsingFilters = (post) => {
         const isInDateRange = post.timestamp >= startDate && post.timestamp <= endDate;
-        const isCorrectUser = userId ? post.author.userId === userId : true;
+        const isCorrectUser = userId ? post.author?.userId === userId : true;
         const isMatchingSearch = search === '' || 
             _.includes(_.toLower(post.author.name), _.toLower(search)) ||
             _.includes(_.toLower(post.content), _.toLower(search));

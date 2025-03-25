@@ -3,10 +3,12 @@ import UserAvatar from '../atoms/UserAvatar'
 import { loggedInUser } from '../../data/userData'
 import IconText from '../molecules/IconText'
 import Icon from '../atoms/Icon'
+import { connect } from 'react-redux'
+import { addNewPost } from '../../redux/actions'
 import { postAddOns } from '../../data/componentListsData'
 import map from 'lodash/map' 
 
-export default function CreatePost( {onNewPostCreated} ) {
+function CreatePost( {addNewPost} ) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [postText, setPostText] = useState('');
     const [mediaFile, setMediaFile] = useState(null);
@@ -46,7 +48,7 @@ export default function CreatePost( {onNewPostCreated} ) {
             comments: []
         };
         
-        onNewPostCreated(newPost);
+        addNewPost(newPost);
         toggleModal();
     }
 
@@ -116,3 +118,9 @@ export default function CreatePost( {onNewPostCreated} ) {
         </>
     )
 }
+
+const mapDispatchToProps = {
+    addNewPost,
+};
+
+export default connect(null, mapDispatchToProps)(CreatePost);

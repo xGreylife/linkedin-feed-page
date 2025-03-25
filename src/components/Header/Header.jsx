@@ -8,20 +8,14 @@ import { navItemData } from "../../data/componentListsData";
 import { Link } from "react-router-dom";
 import map from 'lodash/map'
 
-export default function Header({searchQuery, showUserList, userList, onSearchQueryChange, onShowUserListChange, onSearchPostsByUserId}) {
+export default function Header() {
     return ( 
         <header className="header">
             <div className="left-header">
                 <Link to="/">
                     <Icon iconName='linkedin' size='32px' color='#0B66C2'/>
                 </Link>
-                <SearchBar searchQuery={searchQuery}
-                    showUserList = {showUserList}
-                    userList = {userList}
-                    onSearchQueryChange = {onSearchQueryChange}
-                    onShowUserListChange = {onShowUserListChange}
-                    onSearchPostsByUserId = {onSearchPostsByUserId}
-                />
+                <SearchBar />
             </div>
 
             <nav className="navbar">
