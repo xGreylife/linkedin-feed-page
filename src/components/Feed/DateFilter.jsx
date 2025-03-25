@@ -1,0 +1,34 @@
+import React, { useState } from 'react'
+import Icon from '../atoms/Icon'
+
+export default function DateFilter({startDate, endDate, handleStartDateChange, handleEndDateChange}) {
+    const [showDateFilter, setShowDateFilter] = useState(false);
+
+    function handleClick(){
+        setShowDateFilter(!showDateFilter);
+    }
+
+    return (
+        <>
+            <div className='date-filter flex-row'>
+                <div className='line'></div>
+                <span>Sort by: Date Range</span>
+                <Icon iconName='caret-down-fill' size='12px' onClick={handleClick}></Icon>
+            </div>
+
+            {showDateFilter && (
+                <div className='date-filter-form page-component flex-row'>
+                    <div className='date-input flex-row'>
+                        <label htmlFor="">Start date : </label>
+                        <input type="date" value={startDate} onChange={(e) => {handleStartDateChange(e.target.value)}}/>
+                    </div>
+                    
+                    <div className='date-input flex-row'>
+                        <label htmlFor="">End date : </label>
+                        <input type="date" value={endDate} onChange={(e) => {handleEndDateChange(e.target.value)}}/>
+                    </div>
+                </div>
+            )}
+        </>
+    )
+}

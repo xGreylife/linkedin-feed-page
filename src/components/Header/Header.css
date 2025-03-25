@@ -1,0 +1,29 @@
+.search-bar{
+    position: relative;
+}
+
+.user-list{
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    z-index: 999;
+    max-height: 275px;
+    overflow-y: scroll;
+}
+
+.user-list ul{
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: .875rem;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.user-list li{
+    padding: 5px 0px;
+}
+
+.user-list li:hover{
+    background-color: #F3F3F3;
+}

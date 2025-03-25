@@ -1,0 +1,215 @@
+/* --------- Feed Component - Create Post ------------------------------------ */
+
+.feed{
+    flex-shrink: 1;
+    gap: 0.5rem;
+    width: 555px;
+    position: relative;
+}
+
+.create-post-input-wrapper{
+    display: flex;
+    gap: 0.625em;
+}
+
+.start-post-btn{
+    flex-grow: 1;
+    padding: 1em;
+    border-radius: 50px;
+    border: 1px solid #e0e0e0;
+    background-color: var(--linkedin-white);
+    text-align: left;
+    font-weight: 600;
+    color: #3b3b3b;
+}
+
+.start-post-btn:hover,
+.post-add-ons > div:hover,
+.post-modal-close-btn:hover,
+.post-modal-header > div:hover,
+.date-filter-btn-wapper button:hover{
+    background-color: #F3F3F3;
+}
+
+.post-add-ons{
+    justify-content: space-around;
+}
+
+.post-add-ons > div{
+    border-radius: 4px;
+    padding: 0.625em;
+}
+
+.post-add-ons span{
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+/* --------- Feed Component - Create Post Modal ------------------------------------ */
+
+/* .post-modal-overlay{
+    position: fixed;
+} */
+
+.post-modal{
+    /* width: 680px; */
+    height: fit-content;
+    /* position: fixed;
+    z-index: 999; */
+}
+
+.post-modal-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.post-modal-header > div{
+    border-radius: 10px;
+    padding: 1em;
+}
+
+.post-modal-close-btn{
+    width: 38px;
+    padding: 10px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--linkedin-white);
+}
+
+.post-modal form{
+    gap: 1.25rem;
+}
+
+.post-modal-textarea{
+    min-height: 200px;
+    width: 100%;
+    border: none;
+}
+
+.post-modal-textarea:focus{
+    outline: none;
+    border: none;
+}
+
+.modal-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-button{
+    padding: 0.5em 1em;
+    border-radius: 50px;
+    border: var(--linkedin-border);
+    font-weight: 600;
+    font-size: 0.875em;
+}
+
+.disabled-btn{
+    background-color: #E8E8E8;
+    color: #A2A2A2;
+}
+
+.active-btn{
+    background-color: #0B66C2;
+    color: #FFFFFF;
+}
+
+/* --------- Feed Component - Post ------------------------------------ */
+
+.post-list{
+    gap: 0.5rem;
+}
+
+.post{
+    gap: 0.3125em;
+}
+
+.author-info-wrapper{
+    width: 100%;
+}
+
+.author-info{
+    max-width: 400px;
+}
+
+.author-info > span{
+    font-size: 1em;
+    font-weight: 600;
+}
+  
+.author-info p{
+    margin: 0;
+    font-size: 0.875em;
+    /* white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+}
+
+.post-content p, .comment-content p{
+    font-size: 0.875em;
+}
+
+.post-image{
+    width: 100%;
+}
+
+.post-stats{
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.post-stats span{
+    font-size: 0.875em;
+    color:  var(--linkedin-grey);
+    font-weight: 500;
+}
+
+.no-posts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7;
+    margin: 20px 0;
+}
+
+.date-filter{
+    padding: 0rem 0.625rem;
+}
+
+.date-filter i{
+    user-select: none;
+}
+
+.date-filter span{
+    font-size: 0.75em;
+    color: var(--linkedin-grey);
+}
+
+.line{
+    flex-basis: 70%; 
+    border-bottom: 1px solid var(--linkedin-grey);
+}
+
+.date-filter-form{
+    justify-content: space-around;
+}
+
+.date-input label{
+    font-size: 0.875em;
+    font-weight: 500;
+    color: var(--linkedin-grey);
+}  
+
+.date-filter-btn-wapper{
+    gap: 6px;
+}
+
+.date-filter-btn-wapper button{
+    background-color: var(--linkedin-white);
+    border: 1px solid rgb(55, 143, 233);
+    border-radius: 6px;
+}
